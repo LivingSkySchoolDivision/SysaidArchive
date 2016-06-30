@@ -21,13 +21,12 @@ namespace SysAidArchive
             returnMe.Cells.Add(new TableCell()
             {
                 Text = "<div style=\"\">" +
-                       "<div style=\"font-size: 12pt; font-weight: bold;margin-bottom: 2px;\"><a href=\"Ticket.aspx?id=" + result.Ticket.ID + "\">" + result.Ticket.ID.ToString().PadLeft(5, '0') + ": " + result.Ticket.Title + "</a></div>" +
-                       "<div><b>Score: </b>" + result.SearchScore + ", <b>Hits:</b> " + result.FieldHits.ToCommaSeparatedString() + "</div>" +
+                       "<div style=\"font-size: 12pt; font-weight: bold;margin-bottom: 2px;\"><a href=\"Ticket.aspx?id=" + result.Ticket.ID + "\">" + result.Ticket.Title + "</a></div>" +
                        "<div><b>Created: </b>" + result.Ticket.WhenCreated.ToLongDateString() + " " + result.Ticket.WhenCreated.ToShortTimeString() + " by <b>" + result.Ticket.Reporter + "</b></div>" +
                        "<div><b>Type: </b>" + result.Ticket.ProblemType + " / " + result.Ticket.ProblemSubType + "</div>" +
-                       "<div><b>Asset: </b>" + result.Ticket.ComputerID + "</div>" +
+                       "<div><b>Search Score: </b>" + result.SearchScore + ", <b>Search Hits:</b> " + result.FieldHits.ToCommaSeparatedString() + "</div>" +
                        "<br/><div style=\"font-size: 8pt;\">" + result.Ticket.Description + "</div>" +
-                       "</div>"
+                       "</div><br/>"
             });
 
             return returnMe;
@@ -36,16 +35,21 @@ namespace SysAidArchive
 
         protected void btnSearch_OnClick(object sender, EventArgs e)
         {
-            SysAidTicketRepository repository = new SysAidTicketRepository();
+            string searchTerms = txtSearchTerms.Text.Trim();
 
-            List<SysAidTicketSearchResult> results = repository.Find(txtSearchTerms.Text.Trim());
-
-            lblResults.Text = "<div style=\"font-size: 8pt;\">Found: " + results.Count + "</div>";
-
-            tblResults.Rows.Clear();
-            foreach (SysAidTicketSearchResult result in results)
+            if (!string.IsNullOrEmpty(searchTerms))
             {
-                tblResults.Rows.Add(addSearchResultRow(result));
+                SysAidTicketRepository repository = new SysAidTicketRepository();
+
+                List<SysAidTicketSearchResult> results = repository.Find(searchTerms);
+
+                lblResults.Text = "<div style=\"font-size: 8pt;\"><b>Found: </b>" + results.Count + "</div><br/><br/>";
+
+                tblResults.Rows.Clear();
+                foreach (SysAidTicketSearchResult result in results)
+                {
+                    tblResults.Rows.Add(addSearchResultRow(result));
+                }
             }
 
         }

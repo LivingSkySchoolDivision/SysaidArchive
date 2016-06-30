@@ -210,7 +210,8 @@ namespace SysAidArchive
                 {
                     sqlCommand.Connection = connection;
                     sqlCommand.CommandType = CommandType.Text;
-                    sqlCommand.CommandText = SQLQuery + " WHERE id=";
+                    sqlCommand.CommandText = SQLQuery + " WHERE id=@TICKETID";
+                    sqlCommand.Parameters.AddWithValue("TICKETID", id);
                     sqlCommand.Connection.Open();
                     SqlDataReader dataReader = sqlCommand.ExecuteReader();
                     if (dataReader.HasRows)
