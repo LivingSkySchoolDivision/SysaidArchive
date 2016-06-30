@@ -20,6 +20,7 @@
     <div style="width: 800px; margin-left: auto; margin-right: auto;">
         <h1>LSKYSD SysAid Archive</h1>
         <p>Our SysAid server no longer functions, but you can search it's database of tickets here.</p>
+        <p>Split multiple search terms with a comma ','. Multiple words with just spaces count as a single search term.</p>
         <p>
             <asp:TextBox ID="txtSearchTerms" runat="server" style="width: 500px; margin: 5px;"></asp:TextBox><asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_OnClick" />
         </p>

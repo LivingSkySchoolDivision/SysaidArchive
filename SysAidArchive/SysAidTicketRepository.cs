@@ -191,7 +191,12 @@ namespace SysAidArchive
                 }
 
                 searchResult.SearchScore = score;
-                returnMe.Add(searchResult);
+
+                // We don't care about things that have a zero score
+                if (score > 0)
+                {
+                    returnMe.Add(searchResult);
+                }
             }
 
             return returnMe.OrderByDescending(t => t.SearchScore).ThenByDescending(t => t.Ticket.WhenCreated).ToList();
