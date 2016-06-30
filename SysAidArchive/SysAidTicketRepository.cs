@@ -164,14 +164,18 @@ namespace SysAidArchive
                         score += 50;
                     }
 
-                    if (result.ComputerID.ToLower().Contains(term))
-                    {
-                        if (!searchResult.FieldHits.Contains("computer_id"))
-                        {
-                            searchResult.FieldHits.Add("computer_id");
-                        }
 
-                        score += 1000;
+                    if (term.Length > 5)
+                    {
+                        if (result.ComputerID.ToLower().Contains(term))
+                        {
+                            if (!searchResult.FieldHits.Contains("computer_id"))
+                            {
+                                searchResult.FieldHits.Add("computer_id");
+                            }
+
+                            score += 1000;
+                        }
                     }
 
                     if (result.Reporter.ToLower().Contains(term))
